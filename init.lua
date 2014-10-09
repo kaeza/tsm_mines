@@ -36,8 +36,9 @@ local ids = {
 	dummy = minetest.get_content_id("tsm_mines:dummy")
 }
 
+local chest_stuff
 if(minetest.get_modpath("farming")~=nil) then
-	local chest_stuff = {
+	chest_stuff = {
 		{name="default:apple", max = 3},
 		{name="farming:bread", max = 3},
 		{name="default:steel_ingot", max = 2},
@@ -47,7 +48,7 @@ if(minetest.get_modpath("farming")~=nil) then
 		{name="default:pick_diamond", max = 1}
 	}
 else
-	local chest_stuff = {
+	chest_stuff = {
 		{name="default:apple", max = 3},
 		{name="default:steel_ingot", max = 2},
 		{name="default:gold_ingot", max = 2},
@@ -79,11 +80,18 @@ local function fill_chest(pos)
 				--meta:set_string("infotext", "Chest")
 				local inv = meta:get_inventory()
 				inv:set_size("main", 8*4)
-				for i=0,2,1 do
-					local stuff = chest_stuff[math.random(1,#chest_stuff)]
-					local stack = {name=stuff.name, count = math.random(1,stuff.max)}
-					if not inv:contains_item("main", stack) then
-						inv:set_stack("main", math.random(1,32), stack)
+				local stacks = {}
+				if(minetest.get_modpath("treasurer") ~= nil) then
+					stacks = treasurer.select_random_treasures(3,4,6,{"minetool", "food", "crafting_component"})
+				else
+					for i=0,2,1 do
+						local stuff = chest_stuff[math.random(1,#chest_stuff)]
+						table.insert(stacks,{name=stuff.name, count = math.random(1,stuff.max)})
+					end
+				end
+				for s=1, #stacks do
+					if not inv:contains_item("main", stacks[s]) then
+						inv:set_stack("main", math.random(1,32), stacks[s])
 					end
 				end
 			end
