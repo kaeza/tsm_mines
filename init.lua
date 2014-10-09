@@ -36,16 +36,26 @@ local ids = {
 	dummy = minetest.get_content_id("tsm_mines:dummy")
 }
 
-local chest_stuff = {
-	{name="default:apple", max = 3},
-	{name="farming:bread", max = 3},
-	{name="default:steel_ingot", max = 2},
-	{name="default:gold_ingot", max = 2},
-	{name="default:diamond", max = 1},
-	{name="default:pick_steel", max = 1},
-	{name="default:pick_diamond", max = 1}
-
-}
+if(minetest.get_modpath("farming")~=nil) then
+	local chest_stuff = {
+		{name="default:apple", max = 3},
+		{name="farming:bread", max = 3},
+		{name="default:steel_ingot", max = 2},
+		{name="default:gold_ingot", max = 2},
+		{name="default:diamond", max = 1},
+		{name="default:pick_steel", max = 1},
+		{name="default:pick_diamond", max = 1}
+	}
+else
+	local chest_stuff = {
+		{name="default:apple", max = 3},
+		{name="default:steel_ingot", max = 2},
+		{name="default:gold_ingot", max = 2},
+		{name="default:diamond", max = 1},
+		{name="default:pick_steel", max = 1},
+		{name="default:pick_diamond", max = 1}
+	}
+end
 
 local function rotate_torch(pos)
 	minetest.after(8, function()
