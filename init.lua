@@ -12,7 +12,7 @@ if not MINE_FACTOR then
     MINE_FACTOR = 1.5
 end
 
-minetest.register_node("mines:dummy", {
+minetest.register_node("tsm_mines:dummy", {
 	description = "Air (you hacker you!)",
 	inventory_image = "unknown_node.png",
 	wield_image = "unknown_node.png",
@@ -33,7 +33,7 @@ local ids = {
 	air = minetest.get_content_id("air"),
 	fence = minetest.get_content_id("default:fence_wood"),
 	wood = minetest.get_content_id("default:wood"),
-	dummy = minetest.get_content_id("mines:dummy")
+	dummy = minetest.get_content_id("tsm_mines:dummy")
 }
 
 local chest_stuff = {
@@ -51,7 +51,7 @@ local function rotate_torch(pos)
 	minetest.after(8, function()
 		local n = minetest.get_node(pos)
 		if n ~= nil then
-			if n.name == "mines:dummy" then
+			if n.name == "tsm_mines:dummy" then
 				minetest.set_node(pos, {name="default:torch",param2=1})
 			end
 		end
@@ -62,7 +62,7 @@ local function fill_chest(pos)
 	minetest.after(5, function()
 		local n = minetest.get_node(pos)
 		if n ~= nil then
-			if n.name == "mines:dummy" then
+			if n.name == "tsm_mines:dummy" then
 				minetest.set_node(pos, {name="default:chest"})
 				local meta = minetest.get_meta(pos)
 				--meta:set_string("formspec",default.chest_formspec)
