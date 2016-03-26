@@ -3,13 +3,13 @@ local MINE_DEEP_MAX = tonumber(minetest.setting_get("mines_deep_max"))
 local MINE_FACTOR = tonumber(minetest.setting_get("mines_spawnfactor"))
 
 if not MINE_DEEP_MIN then
-    MINE_DEEP_MIN = -64
+	MINE_DEEP_MIN = -64
 end
 if not MINE_DEEP_MAX then
-    MINE_DEEP_MAX = -380
+	MINE_DEEP_MAX = -380
 end
 if not MINE_FACTOR then
-    MINE_FACTOR = 1.5
+	MINE_FACTOR = 1.5
 end
 
 minetest.register_node("tsm_mines:dummy", {
@@ -76,8 +76,6 @@ local function fill_chest(pos)
 			if n.name == "tsm_mines:dummy" then
 				minetest.set_node(pos, {name="default:chest"})
 				local meta = minetest.get_meta(pos)
-				--meta:set_string("formspec",default.chest_formspec)
-				--meta:set_string("infotext", "Chest")
 				local inv = meta:get_inventory()
 				inv:set_size("main", 8*4)
 				local stacks = {}
@@ -101,16 +99,12 @@ end
 
 local function check_dir(dir,old_dir)
 	if old_dir == 1 and dir == 3 then
-		--n_switch = 2
 		return true
 	elseif old_dir == 3 and dir == 1 then
-		--n_switch = 4
 		return true
 	elseif old_dir == 2 and dir == 4 then
-		--n_switch = 1
 		return true
 	elseif old_dir == 4 and dir == 2 then
-		--n_switch = 3
 		return true
 	end
 	return false
@@ -118,12 +112,12 @@ end
 local function make_mine(mpos,p2,p3, vm_data, vx_area,cnt)
 	local pos = {x=mpos.x,y=mpos.y,z=mpos.z}
 	for j=0,12,1 do
-	local switch = cnt+1
-	local n_switch = math.random(1,4)
-	while check_dir(n_switch,switch) == true do
-		n_switch = math.random(1,4)
-	end
-	switch = n_switch
+		local switch = cnt+1
+		local n_switch = math.random(1,4)
+		while check_dir(n_switch,switch) == true do
+			n_switch = math.random(1,4)
+		end
+		switch = n_switch
 
 		for i=0,20,1 do
 			local pillar = ids.air
@@ -209,16 +203,12 @@ local function make_mine(mpos,p2,p3, vm_data, vx_area,cnt)
 		end
 		if switch == 1 then			
 			pos.z = pos.z+20
-			--pos.x = pos.x+step
 		elseif switch == 2 then
 			pos.x = pos.x+20
-			--pos.z = pos.z+step
 		elseif switch == 3 then			
 			pos.z = pos.z-20
-			--pos.x = pos.x+step
 		elseif switch == 4 then	
 			pos.x = pos.x-20
-			--pos.z = pos.z+step
 		end
 	end
 	if cnt == 0 then
@@ -251,7 +241,6 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	if cnt < 8/MINE_FACTOR then return end
 	cnt = 0
 
-	--if math.random(0,100) > 85 then return end
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local data = vm:get_data()
 	local va = VoxelArea:new{ MinEdge = emin, MaxEdge = emax }
