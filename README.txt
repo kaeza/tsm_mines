@@ -1,11 +1,11 @@
-Minetest mod "Mines"
-====================
-version: 0.3 Beta
+Minetest mod: Mines (with Treasurer support)
+Short name: tsm_mines
+Version: 0.5
 
 License of source code and textures: WTFPL
 -----------------------------------------
-(c) Copyright BlockMen (2013)
-
+Started by BlockMen in 2013.
+Forked by Wuzzy later.
 
 Contributors:
 -------------
@@ -20,24 +20,25 @@ http://sam.zoy.org/wtfpl/COPYING for more details.
 
 Using the mod:
 --------------
+This mod adds abandoned mines in the underground.
 
-This mod adds abandoned mines, similar to MC. 
+You can find chests with different stuff like food, resources, ingots or even tools.
+If you have the Treasurer mod enabled and some treasure registration mods (TRMs), you
+will find stuff from other mods as well.
 
-You can find chest with different stuff like food, resources, ingots or even tools.
-
-
-Remember that this mod is still beta!
-
+Remember that this mod is still in alpha stage!
 
 Settings
 --------
 
 You can change the spawing of mines by adding/changing these values in minetest.conf
-
+(value after equals sign is default value):
 
 mines_deep_min = -64
-^ at this deep mines are created
+	At this depth mines are created
+
 mines_deep_max = -380
-^ up to this deep mines are created
+	Up to this depth mines are created
+
 mines_spawnfactor = 1.5
-^ increase this value to generate more mines
+	Increase this value to generate more mines
