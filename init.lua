@@ -31,10 +31,16 @@ minetest.register_node("tsm_mines:dummy", {
 
 local ids = {
 	air = minetest.get_content_id("air"),
+	mg_air = minetest.get_content_id("mapgen_air"),
+	ignore = minetest.get_content_id("ignore"),
 	fence = minetest.get_content_id("default:fence_wood"),
 	wood = minetest.get_content_id("default:wood"),
 	dummy = minetest.get_content_id("tsm_mines:dummy")
 }
+
+local function is_air(id)
+	return id==ids.air or id==ids.mg_air or id==ids.ignore
+end
 
 local chest_stuff
 if(minetest.get_modpath("farming")~=nil) then
@@ -122,6 +128,7 @@ local function make_mine(mpos,p2,p3, vm_data, vx_area,cnt)
 		for i=0,20,1 do
 			local pillar = ids.air
 			local pillar_top = ids.air
+			local pillar_bottom = ids.wood
 			if i==0 or i == 5 or i == 10 or i == 15 or i == 20 then
 				pillar = ids.fence
 				pillar_top = ids.wood
@@ -188,6 +195,16 @@ local function make_mine(mpos,p2,p3, vm_data, vx_area,cnt)
 			vm_data[vx_area:indexp({x=x1, y=pos.y+1, z=z1})] = pillar_top
 			vm_data[vx_area:indexp({x=x2, y=pos.y+1, z=z2})] = pillar_top
 			vm_data[vx_area:indexp({x=x3, y=pos.y+1, z=z3})] = pillar_top
+
+			if is_air(vm_data[vx_area:indexp({x=x1, y=pos.y-2, z=z1})]) then
+				vm_data[vx_area:indexp({x=x1, y=pos.y-2, z=z1})] = pillar_bottom
+			end
+			if is_air(vm_data[vx_area:indexp({x=x2, y=pos.y-2, z=z2})]) then
+				vm_data[vx_area:indexp({x=x2, y=pos.y-2, z=z2})] = pillar_bottom
+			end
+			if is_air(vm_data[vx_area:indexp({x=x2, y=pos.y-2, z=z3})]) then
+				vm_data[vx_area:indexp({x=x3, y=pos.y-2, z=z3})] = pillar_bottom
+			end
 
 			if math.random(0,6) == 3 then 
 				vm_data[vx_area:indexp({x=x4, y=pos.y-1, z=z4})] = ids.dummy
